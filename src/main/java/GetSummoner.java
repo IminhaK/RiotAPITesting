@@ -1,4 +1,5 @@
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
+import no.stelar7.api.l4j8.basic.constants.types.GameQueueType;
 import no.stelar7.api.l4j8.impl.L4J8;
 import no.stelar7.api.l4j8.impl.builders.summoner.SummonerBuilder;
 import no.stelar7.api.l4j8.impl.raw.ImageAPI;
@@ -43,20 +44,27 @@ public class GetSummoner {
         List<MatchReference> matches = summoner.getGames().get();
         MatchReference recentGame = matches.stream().max(Comparator.comparing(MatchReference::getTimestamp)).get();
         Match match = recentGame.getFullMatch();
+
         Participant self = match.getParticipantFromSummonerId(summoner.getSummonerId()); //game data for user (summs, champ etc)
         StaticChampion champion = champData.get(recentGame.getChampionId());
         MatchPerks summs = self.getPerks();
         boolean won = match.didWin(self);
-        ParticipantIdentity opponentId = match.getLaneOpponentIdentity(self); //get lane opponent id
-        Participant opponent = match.getParticipantFromParticipantId(opponentId.getParticipantId()); //summs, champ, etc for lane opponent
-        StaticChampion opponentChamp = champData.get(opponent.getChampionId());
 
+        ParticipantIdentity opponentId = match.getLaneOpponentIdentity(self); //get lane opponent id
+
+        boolean hasRoles = match.getGameQueueType() == GameQueueType.NORMAL_5X5_DRAFT || match.getGameQueueType() == GameQueueType.RANKED_SOLO_5X5 || match.getGameQueueType() == GameQueueType.RANKED_FLEX_SR;
 
         System.out.println("Profile icon: " + pfp);
         System.out.println(name + ", Level " + level);
         System.out.println();
-        System.out.format(name + " %s their most recent game.", won ? "won" : "lost");
+        System.out.format(name + " %s their most recent " + match.getGameQueueType() + " game.", won ? "won" : "lost");
         System.out.println();
-        System.out.println("They were playing " + self.getTimeline().getLane() + " " + champion.getName() + " against " + opponentChamp.getName() + ".");
+        if(opponentId != null && match.getGameQueueType() != GameQueueType.ARAM){
+
+            Participant opponent = match.getParticipantFromParticipantId(opponentId.getParticipantId()); //summs, champ, etc for lane opponent
+            StaticChampion opponentChamp = champData.get(opponent.getChampionId());
+
+            System.out.format("They were playing %s" + champion.getName() + " against " + opponentChamp.getName() + ".", hasRoles ? self.getTimeline().getLane() + " " : "");
+        }
     }
 }
