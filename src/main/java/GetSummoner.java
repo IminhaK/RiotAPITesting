@@ -15,20 +15,8 @@ public class GetSummoner {
     {
         L4J8 api = new L4J8(Secrets.apicred);
 
-        System.out.println("Who would you like to search?");
-        Scanner scanner1 = new Scanner(System.in);
-        String username = scanner1.nextLine();
-
-        System.out.println("On what region?");
-        Scanner scanner2 = new Scanner(System.in);
-        String regionin = scanner2.nextLine();
-
-        if ("na".equals(regionin))
-        {
-            go(username, Platform.NA1, api);
-        } else {
-            System.out.println("That is not a valid region. Bye bye!");
-        }
+        GUIPickInfo gui = new GUIPickInfo(api);
+        gui.setVisible(true);
     }
 
     public static void go(String user, Platform region, L4J8 api)
@@ -54,17 +42,19 @@ public class GetSummoner {
 
         boolean hasRoles = match.getGameQueueType() == GameQueueType.NORMAL_5X5_DRAFT || match.getGameQueueType() == GameQueueType.RANKED_SOLO_5X5 || match.getGameQueueType() == GameQueueType.RANKED_FLEX_SR;
 
-        System.out.println("Profile icon: " + pfp);
+        /*System.out.println("Profile icon: " + pfp);
         System.out.println(name + ", Level " + level);
         System.out.println();
-        System.out.format(name + " %s their most recent " + match.getGameQueueType() + " game.", won ? "won" : "lost");
-        System.out.println();
+        System.out.format(name + " %s their most recent " + match.getGameQueueType() + " game as " + champion.getName() + ".", won ? "won" : "lost");
+        System.out.println();*/
         if(opponentId != null && match.getGameQueueType() != GameQueueType.ARAM){
 
             Participant opponent = match.getParticipantFromParticipantId(opponentId.getParticipantId()); //summs, champ, etc for lane opponent
             StaticChampion opponentChamp = champData.get(opponent.getChampionId());
 
-            System.out.format("They were playing %s" + champion.getName() + " against " + opponentChamp.getName() + ".", hasRoles ? self.getTimeline().getLane() + " " : "");
+            //System.out.format("They were playing %s against " + opponentChamp.getName() + ".", hasRoles ? self.getTimeline().getLane() + " " : "");
         }
+
+        GUIGetSummoner gui = new GUIGetSummoner(pfp, name);
     }
 }
