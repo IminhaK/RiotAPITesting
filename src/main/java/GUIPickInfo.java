@@ -15,6 +15,7 @@ public class GUIPickInfo extends JFrame implements ActionListener {
     JButton okay;
     L4J8 apiIn;
     String usernameIn;
+    Platform platform = null;
 
     GUIPickInfo(L4J8 api)
     {
@@ -51,9 +52,6 @@ public class GUIPickInfo extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
-        Platform platform = null;
-
         if (e.getSource() == regionList){
             JComboBox cb = (JComboBox)e.getSource();
             String region = (String)cb.getSelectedItem();
@@ -68,10 +66,10 @@ public class GUIPickInfo extends JFrame implements ActionListener {
             }
         }
 
-        System.out.println(platform);
         if(e.getSource() == okay && platform != null)
         {
-            System.out.println("user" + usernameIn);
+            usernameIn = usernameBox.getText();
+            GetSummoner.go(usernameIn, platform, apiIn);
         }
     }
 }
