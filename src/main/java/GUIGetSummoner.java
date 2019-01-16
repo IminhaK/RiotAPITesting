@@ -1,4 +1,5 @@
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
+import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
 import no.stelar7.api.l4j8.basic.constants.types.GameQueueType;
 import no.stelar7.api.l4j8.basic.constants.types.LaneType;
 import no.stelar7.api.l4j8.impl.L4J8;
@@ -23,6 +24,7 @@ public class GUIGetSummoner extends JFrame {
     private JLabel label2;
     private JLabel label3;
     private JLabel label4;
+    private JLabel label5;
 
     GUIGetSummoner(String user, Platform region, L4J8 api)
     {
@@ -67,7 +69,7 @@ public class GUIGetSummoner extends JFrame {
         label2 = new JLabel(name + ", Level " + level);
         add(label2);
 
-        label3 = new JLabel(name + won + " their most recent " + match.getGameQueueType() + " game as " + champion.getName() + ".");
+        label3 = new JLabel(name + " " + won + " their most recent " + match.getGameQueueType() + " game as " + champion.getName() + ".");
         add(label3);
 
         if(opponentId != null && match.getGameQueueType() != GameQueueType.ARAM){
@@ -83,5 +85,8 @@ public class GUIGetSummoner extends JFrame {
                 label4 = new JLabel("They were playing against " + opponentChamp.getName() + ".");
             add(label4);
         }
+
+        label5 = new JLabel(name + " has played " + champData.get(99).getName() + " " + Helpers.getChampionFrequency(summoner, 99, champData) + " times.");
+        add(label5);
     }
 }
