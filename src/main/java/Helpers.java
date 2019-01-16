@@ -34,7 +34,7 @@ public class Helpers {
 
             for(String string : championIdsString) championIds.add(Integer.valueOf(string));
 
-            for(int i = 1; i <= matches.size(); i++)
+            for(int i = 1; i <= championIds.size(); i++)
             {
                 int championId = championIds.get(i-1);
 
@@ -47,10 +47,12 @@ public class Helpers {
             System.out.println("File for " + summoner.getName() + " does not exist. Writing.");
             try (FileWriter fileWriter = new FileWriter(absolutePath)) {
 
-                for (int i = 1; i <= 100; i++)
+                for (int i = 1; i <= 9999; i++)
                 {
-                    matches.addAll(summoner.getGames().withBeginIndex((long)i*100).get());
+                    List<MatchReference> matchref = summoner.getGames().withBeginIndex((long)i*100).get();
+                    matches.addAll(matchref);
                     System.out.println(i*100 + " games analyzed so far.");
+                    if(matchref.isEmpty()) break;
                 }
 
                 for(int i = 1; i <= matches.size(); i++)

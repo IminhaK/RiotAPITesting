@@ -22,7 +22,7 @@ public class GUIPickInfo extends JFrame implements ActionListener {
         setLayout(new GridLayout(3, 2));
         setSize(475,200);
         setTitle("Select Summoner Information");
-        String[] regions = { "Region", "NA", "EUW", "EUNE"};
+        String[] regions = { "Region", "NA", "EUW", "EUNE", "TR"};
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         askname = new JLabel();
@@ -61,6 +61,8 @@ public class GUIPickInfo extends JFrame implements ActionListener {
                 case "EUW": platform = Platform.EUW1;
                     break;
                 case "EUNE": platform = Platform.EUN1;
+                    break;
+                case "TR": platform = Platform.TR1;
                     break;
                 default: platform = null;
             }

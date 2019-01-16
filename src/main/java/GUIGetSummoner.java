@@ -78,7 +78,6 @@ public class GUIGetSummoner extends JFrame {
             StaticChampion opponentChamp = champData.get(opponent.getChampionId());
             LaneType role = self.getTimeline().getLane();
 
-            //System.out.format("They were playing %s against " + opponentChamp.getName() + ".", hasRoles ? self.getTimeline().getLane() + " " : "");
             if(hasRoles)
                 label4 = new JLabel("They were playing " + role + " against " + opponentChamp.getName() + ".");
             else
@@ -87,6 +86,7 @@ public class GUIGetSummoner extends JFrame {
         }
 
         label5 = new JLabel(name + " has played " + champion.getName() + " " + Helpers.getChampionFrequency(summoner, champion.getId(), champData) + " times.");
+        //label5 = new JLabel(name + " has played " + champData.get(22).getName() + " " + Helpers.getChampionFrequency(summoner, 22, champData) + " times."); FOR TESTING A SPECIFIC CHAMPION
         add(label5);
     }
 }
