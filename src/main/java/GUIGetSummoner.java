@@ -86,7 +86,7 @@ public class GUIGetSummoner extends JFrame {
             add(label4);
         }
 
-        label5 = new JLabel(name + " has played " + champData.get(99).getName() + " " + Helpers.getChampionFrequency(summoner, 99, champData) + " times.");
+        label5 = new JLabel(name + " has played " + champion.getName() + " " + Helpers.getChampionFrequency(summoner, champion.getId(), champData) + " times.");
         add(label5);
     }
 }

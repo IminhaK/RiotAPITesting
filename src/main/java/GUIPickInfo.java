@@ -21,7 +21,7 @@ public class GUIPickInfo extends JFrame implements ActionListener {
     {
         setLayout(new GridLayout(3, 2));
         setSize(475,200);
-        setName("Select Summoner Information");
+        setTitle("Select Summoner Information");
         String[] regions = { "Region", "NA", "EUW", "EUNE"};
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

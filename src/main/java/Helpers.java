@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Helpers {
 
@@ -14,40 +15,43 @@ public class Helpers {
     {
         int timesPlayed = 0;
         List<MatchReference> matches = summoner.getGames().get();
-        List<Integer> championIds = new ArrayList<Integer>();
+        List<Integer> championIds = new ArrayList<>();
+        List<String> championIdsString = new ArrayList<>();
 
-        for (int i = 1; i <= 10; i++)
-        {
-            matches.addAll(summoner.getGames().withBeginIndex((long)i*100).get());
-            System.out.println("going.");
-        }
-
-        String absolutePath = Paths.get("C:\\Users\\Bloop\\Desktop\\Riot API Testing\\src\\main\\resources\\champ_data\\" + summoner.getName()+ ".txt").toString();
-        System.out.println(absolutePath);
+        String absolutePath = Paths.get("C:\\Users\\Bloop\\Desktop\\Riot API Projects\\Riot API Testing\\src\\main\\resources\\champ_data\\" + summoner.getName()+ ".txt").toString();
         try(FileReader fileReader = new FileReader(absolutePath))
         {
-            int read = fileReader.read();
-            while(read != -1)
-            {
-                System.out.println((char)read);
-                read = fileReader.read();
+            File f = new File(absolutePath);
+            Scanner s = new Scanner(f);
+            String pattern = "\\W";
+            String scan;
 
+            while(s.hasNext())
+            {
+                scan = s.next().replaceAll(pattern, "");
+                championIdsString.add(scan);
             }
 
-            /*championIds =;
+            for(String string : championIdsString) championIds.add(Integer.valueOf(string));
 
-                for(int i = 1; i <= matches.size(); i++)
-                {
-                    int championId = championIds.get(i-1);
+            for(int i = 1; i <= matches.size(); i++)
+            {
+                int championId = championIds.get(i-1);
 
-                    if(championId == champion)
-                        timesPlayed++;
-                }*/
+                if(championId == champion)
+                    timesPlayed++;
+            }
         }
         catch (FileNotFoundException e)
         {
-            System.out.println("does not exist. writing.");
+            System.out.println("File for " + summoner.getName() + " does not exist. Writing.");
             try (FileWriter fileWriter = new FileWriter(absolutePath)) {
+
+                for (int i = 1; i <= 100; i++)
+                {
+                    matches.addAll(summoner.getGames().withBeginIndex((long)i*100).get());
+                    System.out.println(i*100 + " games analyzed so far.");
+                }
 
                 for(int i = 1; i <= matches.size(); i++)
                 {
