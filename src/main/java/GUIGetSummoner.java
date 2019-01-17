@@ -25,6 +25,7 @@ public class GUIGetSummoner extends JFrame {
     private JLabel label3;
     private JLabel label4;
     private JLabel label5;
+    private JLabel label6;
 
     GUIGetSummoner(String user, Platform region, L4J8 api)
     {
@@ -86,7 +87,10 @@ public class GUIGetSummoner extends JFrame {
         }
 
         label5 = new JLabel(name + " has played " + champion.getName() + " " + Helpers.getChampionFrequency(summoner, champion.getId(), champData) + " times.");
-        //label5 = new JLabel(name + " has played " + champData.get(22).getName() + " " + Helpers.getChampionFrequency(summoner, 22, champData) + " times."); FOR TESTING A SPECIFIC CHAMPION
+        //label5 = new JLabel(name + " has played " + champData.get(64).getName() + " " + Helpers.getChampionFrequency(summoner, 64, champData) + " times."); //FOR TESTING A SPECIFIC CHAMPION
         add(label5);
+
+        label6 = new JLabel("Their most popular champion is " + champData.get(Helpers.mostFrequentChampAsId()).getName());
+        add(label6);
     }
 }

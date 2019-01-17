@@ -3,20 +3,21 @@ import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Helpers {
+
+    private static List<Integer> championIds = new ArrayList<>();
+    private static List<String> championIdsString = new ArrayList<>();
 
     public static int getChampionFrequency(Summoner summoner, int champion, Map<Integer, StaticChampion> champData)
     {
         int timesPlayed = 0;
         List<MatchReference> matches = summoner.getGames().get();
-        List<Integer> championIds = new ArrayList<>();
-        List<String> championIdsString = new ArrayList<>();
 
         String absolutePath = Paths.get("C:\\Users\\Bloop\\Desktop\\Riot API Projects\\Riot API Testing\\src\\main\\resources\\champ_data\\" + summoner.getName()+ ".txt").toString();
         try(FileReader fileReader = new FileReader(absolutePath))
@@ -74,8 +75,31 @@ public class Helpers {
         return timesPlayed;
     }
 
-    public static StaticChampion mostFrequentChamp()
+    public static int mostFrequentChampAsId()
     {
-        return null;
+        Integer[] arr = championIds.toArray(new Integer[championIds.size()]);
+
+        Arrays.sort(arr);
+
+        int count = 1, tempCount;
+        int popular = arr[0];
+        int temp = 0;
+        for (int i = 0; i < (arr.length - 1); i++)
+        {
+            temp = arr[i];
+            tempCount = 0;
+            for (int j = 1; j < arr.length; j++)
+            {
+                if (temp == arr[j])
+                    tempCount++;
+            }
+            if (tempCount > count)
+            {
+                popular = temp;
+                count = tempCount;
+            }
+        }
+
+        return popular;
     }
 }
