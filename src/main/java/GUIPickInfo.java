@@ -55,17 +55,11 @@ public class GUIPickInfo extends JFrame implements ActionListener {
         if (e.getSource() == regionList){
             JComboBox cb = (JComboBox)e.getSource();
             String region = (String)cb.getSelectedItem();
-            switch(region){
-                case "NA": platform = Platform.NA1;
-                    break;
-                case "EUW": platform = Platform.EUW1;
-                    break;
-                case "EUNE": platform = Platform.EUN1;
-                    break;
-                case "TR": platform = Platform.TR1;
-                    break;
-                default: platform = null;
-            }
+            if(region != "Region")
+                platform = Platform.fromString(region).get();
+            else
+                platform = null;
+            System.out.println(platform);
         }
 
         if(e.getSource() == okay && platform != null)

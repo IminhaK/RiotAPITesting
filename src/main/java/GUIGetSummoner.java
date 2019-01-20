@@ -1,5 +1,4 @@
 import no.stelar7.api.l4j8.basic.constants.api.Platform;
-import no.stelar7.api.l4j8.basic.constants.api.URLEndpoint;
 import no.stelar7.api.l4j8.basic.constants.types.GameQueueType;
 import no.stelar7.api.l4j8.basic.constants.types.LaneType;
 import no.stelar7.api.l4j8.impl.L4J8;
@@ -86,11 +85,13 @@ public class GUIGetSummoner extends JFrame {
             add(label4);
         }
 
-        label5 = new JLabel(name + " has played " + champion.getName() + " " + Helpers.getChampionFrequency(summoner, champion.getId(), champData) + " times.");
-        //label5 = new JLabel(name + " has played " + champData.get(64).getName() + " " + Helpers.getChampionFrequency(summoner, 64, champData) + " times."); //FOR TESTING A SPECIFIC CHAMPION
+        Helper helper = new Helper(summoner);
+
+        label5 = new JLabel(name + " has played " + champion.getName() + " " + helper.getChampionFrequency(champion.getId(), champData) + " times.");
+        //label5 = new JLabel(name + " has played " + champData.get(64).getName() + " " + Helper.getChampionFrequency(summoner, 64, champData) + " times."); //FOR TESTING A SPECIFIC CHAMPION
         add(label5);
 
-        label6 = new JLabel("Their most popular champion is " + champData.get(Helpers.mostFrequentChampAsId()).getName());
+        label6 = new JLabel("Their most popular champion is " + champData.get(helper.mostFrequentChampAsId()).getName());
         add(label6);
     }
 }
