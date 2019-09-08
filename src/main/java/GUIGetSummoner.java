@@ -25,6 +25,7 @@ public class GUIGetSummoner extends JFrame {
     private JLabel label4;
     private JLabel label5;
     private JLabel label6;
+    private JLabel label7;
 
     GUIGetSummoner(String user, Platform region, L4J8 api)
     {
@@ -88,10 +89,18 @@ public class GUIGetSummoner extends JFrame {
         Helper helper = new Helper(summoner);
 
         label5 = new JLabel(name + " has played " + champion.getName() + " " + helper.getChampionFrequency(champion.getId(), champData) + " times.");
-        //label5 = new JLabel(name + " has played " + champData.get(64).getName() + " " + Helper.getChampionFrequency(summoner, 64, champData) + " times."); //FOR TESTING A SPECIFIC CHAMPION
+        //label5 = new JLabel(name + " has played " + champData.get(107).getName() + " " + helper.getChampionFrequency(107, champData) + " times."); //FOR TESTING A SPECIFIC CHAMPION
         add(label5);
 
-        label6 = new JLabel("Their most popular champion is " + champData.get(helper.mostFrequentChampAsId()).getName());
+        int mostFrequent = helper.mostFrequentChampAsId();
+
+        label6 = new JLabel("Their most popular champion is " + champData.get(mostFrequent).getName());
+        if(champion.getId() != mostFrequent)
+            label6.setText(label6.getText() + ", played " + helper.getChampionFrequency(mostFrequent, champData) + " times and has " + summoner.getChampionMastery(mostFrequent).getChampionPoints() + " points on them.");
         add(label6);
+
+        MatchReference firstMatch = helper.matches.get(helper.matches.size() - 1);
+        label7 = new JLabel("Their first game was played on " + firstMatch.getTimestampAsDate() + " and the match id is " + firstMatch.getGameId());
+        add(label7);
     }
 }

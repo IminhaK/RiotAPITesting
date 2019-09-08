@@ -3,8 +3,6 @@ import no.stelar7.api.l4j8.pojo.match.MatchReference;
 import no.stelar7.api.l4j8.pojo.staticdata.champion.StaticChampion;
 import no.stelar7.api.l4j8.pojo.summoner.Summoner;
 
-import java.io.*;
-import java.nio.file.Paths;
 import java.util.*;
 
 public class Helper {
@@ -19,7 +17,7 @@ public class Helper {
         matches = summonerIn.getGames().getLazy();
         System.out.println("Loading fully...");
         ((LazyList<MatchReference>) matches).loadFully();
-        System.out.println("Done.");
+        System.out.println("Done. Loaded " + matches.size() + " games.");
     }
 
     public int getChampionFrequency(int champion, Map<Integer, StaticChampion> champData)
